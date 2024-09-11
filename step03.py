@@ -1,106 +1,72 @@
-'''
+# [1] 파일쓰기(생성)
 
-1. 연산자
-2. 연산자의 종류
-    대입 연산자를 제외한 연산자 1개당 연산 결과의 자료값은 1개
-    1. 산술 연산자 : + 더하기, - 빼기 , ** 제곱, / 나누기,  // 몫, % 나머지
-    2. 연결연산자 : + 문자열연결, ,(쉼표) 문자열연결
-    3. 비교연산지 : >초과, <미만, >=이상, <= 이하, == 같다 , != 같지않다
-    4. 논리연산자 :
-         and 이면서 이고 그리고,  모두 True 이면 결과도 True, 하나라도 False 이면 결과도 False
-         or 이거나 거나 하나라도, 하나라도 True이면 결과도  True
-        #not 부정 반대 , True -> False , False -> True
-    5. 대입 연산자, 복합대입연산자
-        1. = 오른쪽 값을 왼쪽에 대입
-        2. +=. -=, **= , /= , //=, %=
-            복합대입연산자
-
-'''
+open('test1.txt' , 'w') #
+open( '../test2.txt' , 'w')
 
 
-# [1] 산술 연산자, 반환 리터럴: 정수,실수
-print( 10 + 3 ) # 13
-print( 10 - 3 ) # 7
-print( 10 * 3 ) # 30
-print( 10 ** 3 ) # 1000
-print( 10 / 3 ) # 3.3333333
-print( 10 // 3) # 3
-print( 10 %  3 ) # 1
+# [2] 파일의 내용 쓰기
+file4 = open( './test4.txt' , 'w' ) # 쓰기모드 파일 생성하고 파일객체 반환받아서 변수에 저장
+file4.write("dhsdhsa")
+file4.close()
 
-# [2] 연결연산자 반환 리터럴 : 문자열 자료 1개
-print( "hello" + "python" )
-print( "hello" , "python")
-# print( "hello" + "python" + 3 ) 문자열 + 숫자 => 오류발생
+file5 = open('./test5.txt' , 'w' , encoding='utf-8')
+for value in range( 1 , 11 ) :
+    # range(시작값 , 끝값): 시작값 부터 끝값 전까지 1씩 증가하는 리스트 반환
+    data = f'{value} 번째 줄입니다. \n'
+    file5.write(data)
 
-# [3] 비교연산자, 반환 리터럴 : 불리언 자료 1개
-print ( 10 > 3 ) # True
-print ( 10 < 3 ) # False
-print ( 10 >= 3 ) # True
-print ( 10 == 3 ) # False
-print (10 != 3 ) # True
+file5.close()
 
-# [4] 논리연산자
-print( 10 > 3 and 20 > 15 ) # True
-    # True and True  => True
-print( 10 > 3 and 20 > 30 ) # False
-    # True and False => False
-print( 10 > 3 or 20 > 15 ) # True
-    # True or True => True
-print( 10 > 3 or 20 > 30 )
-    # True or False => True
-print( not ( 10 > 3 ) ) # True -> False
+# [3] 키보드로부터 입력받은 값을 파일(file6)에 저장
+
+input1= str(input("입력 ㄱㄱ : "))
+file6 = open('./test6.txt' , 'w' , encoding='utf-8')
+file6.write(input1)
+file6.close()
 
 
-# [5] 대입연산자
-var1 = 10 # 10 리터럴 값을 var1 변수에 대입.
-#(1) var1 변수의 자료값에 10을 더해서 저장
-var1 + 10  # var1 변수값 수정 X
-var1 = var1 + 10  # print(var1) => 20
-   # 1. var1 변수의 값호출, var1 = 10 + 10
-   # 2. 연산, var1 = 20
-   # 3. 대입, var1(20)
-   # 짧게 작성하는 방법
+# [4] 파일을 읽는 여러가지 방법
 
-var1 += 10
-#좌항 += 우항 : 우항의 값을 좌항 값과 더한 후 좌항에 대입
+file = open('./test5.txt' , 'r' , encoding='utf-8')
+#1. readline() # 파일을 한줄을 읽음
+line = file.readline()
+print(line)
+while True :
+    line = file.readline()
+    if not line : # 만약에 읽어온 문자가 '공백'이면
+        break # 가장 가까운 반복문을 종료
+    print( line )
+file.close() # 파일닫기
 
-print( var1 ) # 30
+#2. .readlines() # 파일내 한줄씩 요소로 해서 여러줄을 리스트로 반환
 
-var1 -= 10
-print(var1)  # 20
-var1 *= 10
-print(var1)  # 200
-var1 **= 2
-print(var1) # 40000
-var1 /= 2
-print(var1) # 20000.0
-var1 //= 2
-print(var1) # 10000.0
-var1 %= 3
-print(var1)  # 1.0
+file = open('./test5.txt' , 'r' , encoding='utf-8')
+lines = file.readlines()
+print( lines )
 
+for line in lines :
+    print( line )
+file.close() # 파일 작업이 끝나면 파일닫기
 
-# [6] 삼항연산자 1. 조건항 2. 참 3. 거짓
-    # [True 실행문] if [조건문] else [False 실행문]
-        # 조건이 True 이면 [True 실행문] 실행
-        # 만약에 조건이 False이면 [False 실행문] 실행\
-    # 삼항 연산자 중첩
-        # [True 실행문1] if [조건문1] else [True 실행문2] if [조건문 2] else [False 실핼문 ]
+# 3.read # 파일내 모든 내용을 문자열로 읽어오는 함수
+file = open( './test5.txt' , 'r' , encoding='utf-8' )
+content = file.read()
+print(content)
+file5.close()
 
-point = 85
-# # 포인트가 90 이상이면 합격 아니면 불합격
-print('합격' if point >= 90 else '불합격')
-# 포인트가 90점 이상이면 '최우수' 80점 이상이면 '우수' 그 외 '장려' 출력
-print('최우수'if point >=90 else '우수' if point >= 80 else '장려')
+# [5] 키보드로부터 입력받은 값이 저징된(file6.txt) 파일의 값을 읽어오기
 
+uzer1 = input('입력 : ')
+file = open('./test6.txt' , 'w' , encoding='utf-8')
+file.write(uzer1)
+file = open('./test6.txt' , 'r' , encoding='utf-8')
+read = file.read()
+print(read)
 
-# 실습 1 : 기본급과 수당 금액을 각 정수로 입력 받아 실수령액 계싼
-# 실수령액 기본급 + 수당 = 세금 (기본급10%)
+# 파일처리와 예외처리 같이 작성 하기
+    # 1. 파일명의 오타가 있거나 존재하지 않는 파일은 예외 발생 # FileNotFoundError
 
-
-
-pay = int(input('기본급 입력 : ' ))
-plus_Pay = int(input('수당 입력 : ' ))
-minus_pay = pay*0.1
-real_pay = pay + plus_Pay - minus_pay
-print(f"실수령액은 {real_pay} 입니다")
+try :
+    file = open('./test7.txt', 'r', encoding='utf-8')
+except FileNotFoundError as e : # 2. 예외 발생시 안내문구
+    print("존재하지 않는 파일 이거나 경로의 문제가 있습니다")
